@@ -1,0 +1,15 @@
+version: '3'
+
+tasks:
+  publish:
+    desc: Build and publish the bot as a native AOT binary (local)
+    vars:
+      RUNTIME: linux-x64
+      OUTPUT: ./publish
+    cmds:
+      - dotnet publish -c Release -r {{.RUNTIME}} --self-contained -o {{.OUTPUT}}
+
+  deploy:
+    desc: Build Docker image and deploy to VPS
+    cmds:
+      - ./deploy.sh
