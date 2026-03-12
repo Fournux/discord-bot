@@ -9,6 +9,13 @@ tasks:
     cmds:
       - dotnet publish -c Release -r {{.RUNTIME}} --self-contained -o {{.OUTPUT}}
 
+  run-local:
+    desc: Build Docker image and run it locally
+    cmds:
+      - podman build -t discord-bot .
+      - mkdir -p ./logs
+      - podman run --rm --name discord-bot --env-file ./discord-bot.env -v ./logs:/app/logs discord-bot
+
   deploy:
     desc: Build Docker image and deploy to VPS
     cmds:
